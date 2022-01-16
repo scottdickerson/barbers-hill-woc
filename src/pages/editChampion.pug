@@ -1,0 +1,27 @@
+head 
+    script(src="/scripts/uploadPage.js") 
+body
+    h1 Edit Video
+    form#uploadForm(enctype='multipart/form-data' method='POST' action="/api" style='\
+    display: flex;\
+    flex-flow: column;\
+    justify-content: space-between;\
+    height: 300px;\
+    width: 300px;\
+    ')
+        label#sport Sport
+        input#sport(aria-labelledby='sport' type='text' name='sport', value=sport)
+        label#award Award
+        input#award(aria-labelledby='award' type='text' name='award',value=award)
+        label#yearLabel Year
+        input#year(placeholder='Enter year of induction' aria-labelledby='yearLabel' type='number' name='year' value=year style='width: 400px')
+        input#fileUploader(name='imageFile' type='file')
+        label#descriptionLabel Description
+        textarea#description(aria-labelledby='descriptionLabel' type='text' name='description'  rows='5' cols='35')=description
+        #errorMessage(style='color: red')
+    div(style='padding: 1rem; display: flex; flex-flow: column')
+    //- span#videoFilename
+    //- video#existingVideo(style='height: 300px' controls='')  TODO: show loaded image
+    div(style='width: 300px; display: flex; justify-content: space-between;')
+        button#submitButton(onclick="submitForm()") Update Champion
+        button#list(onclick="listChampions()") List existing champions

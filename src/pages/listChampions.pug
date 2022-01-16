@@ -1,0 +1,42 @@
+head 
+    script(src="/scripts/uploadPage.js") 
+body
+    h1 Current Champions
+    button#add(onclick="addChampion()") Add new champion
+    each champion in champions 
+        div(style='\
+        display: flex;\
+        flex-flow: row;\
+        align-items: center;\
+        ')
+            div(style='\
+            display: flex;\
+            flex-flow: column;\
+            align-items: flex-start;\
+            width:300px;\
+            ')
+                h2 Sport: #{champion.sport}
+                p Award: #{champion.award}
+                p Year: #{champion.year}
+                p Description: #{champion.description}
+            div(style='\
+            display: flex;\
+            ')
+                button(onclick="editChampion('"+champion._id+"')" style='\
+                height: 20px;\
+                width: 150px;\
+                marginLeft: 1rem;\
+                ') Edit Champion
+                button(onclick="deleteChampion('"+champion._id+"')" style='\
+                height: 20px;\
+                width: 150px;\
+                marginLeft: 1rem;\
+                ') Delete Champion
+        hr(style='\
+        width: 100%;\
+        height: 3px;\
+        background-color: black;\
+        margin-Top: 1rem;\
+        ')
+    
+

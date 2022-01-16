@@ -1,0 +1,25 @@
+head 
+    script(src="/scripts/uploadPage.js") 
+body
+    h1 Upload new champion
+    form#uploadForm(enctype='multipart/form-data' method='POST' action='/api' style='\
+    display: flex;\
+    flex-flow: column;\
+    height: 250px;\
+    justify-content: space-between;\
+    width: 300px;\
+    ')
+        label#sport Sport
+        input#sport(aria-labelledby='sport' type='text' name='sport')
+        label#award Award
+        input#award(aria-labelledby='award' type='text' name='award')
+        label#yearLabel Year
+        input#year(placeholder='Enter year of induction' aria-labelledby='yearLabel' type='number' name='year' style='width: 400px')
+        input#fileUploader(name='imageFile' type='file')
+        label#descriptionLabel Description
+        textarea#description(aria-labelledby='descriptionLabel' type='text' name='description' rows='5' cols='35')
+        #errorMessage(style='color: red')
+    div
+    h2 Actions
+    button#submitButton(onclick="submitForm()") Upload
+    button#list(onclick="listChampions()") List existing champions
