@@ -12,3 +12,7 @@ heroku config:set MONGO_PASS=<normalpassword>
 heroku config:set ENVIRONMENT=heroku
 
 ```
+
+## TODOS
+
+- Delete image if you edit a champion and replace the image

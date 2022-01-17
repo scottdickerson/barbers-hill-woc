@@ -10,11 +10,11 @@ import { Writable } from "stream";
 const app = express();
 
 // Replace the uri string with your MongoDB deployment's connection string.
-const uri = `mongodb+srv://${process.env.MONGO_USER}:${
-  process.env.MONGO_PASS
-}@${process.env.MONGO_HOSTNAME || "127.0.0.1"}${
-  process.env.MONGO_PORT ? ":" + process.env.MONGO_PORT || "27017" : ""
-}/?retryWrites=true&w=majority`;
+const uri = process.env.MONGO_HOSTNAME
+  ? `mongodb+srv://${process.env.MONGO_USER}:${process.env.MONGO_PASS}@${process.env.MONGO_HOSTNAME}/?retryWrites=true&w=majority`
+  : `mongodb://127.0.0.1:${
+      process.env.MONGO_PORT ? process.env.MONGO_PORT : "27017"
+    }`;
 
 const client = new MongoClient(uri);
 let championsDatabaseCollection: mongoDB.Collection;
@@ -28,7 +28,9 @@ async function connectToDB() {
   const database = client.db("barbers-hill");
   championsDatabaseCollection = database.collection("wall-of-champions");
   console.log(
-    `connected to the barbers hill mongo database here: ${process.env.MONGO_HOSTNAME}`
+    `connected to the barbers hill mongo database here: ${
+      process.env.MONGO_HOSTNAME || "mongodb://127.0.0.1:27017"
+    }`
   );
   imagesBucket = new GridFSBucket(database, { bucketName: IMAGES_BUCKET_NAME });
   imagesDatabaseCollection = database.collection(`${IMAGES_BUCKET_NAME}.files`);
