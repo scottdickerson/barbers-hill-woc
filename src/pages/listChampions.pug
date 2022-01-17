@@ -15,23 +15,25 @@ body
             align-items: flex-start;\
             ')
                 h2 Sport: #{champion.sport}
+                 div(style='\
+                    display: flex;\
+                    padding: 1rem 0rem;\
+                    ')
+                    button(onclick="editChampion('"+champion._id+"')" style='\
+                    height: 20px;\
+                    width: 150px;\
+                    marginLeft: 1rem;\
+                    ') Edit Champion
+                    button(onclick="deleteChampion('"+champion._id+"')" style='\
+                    height: 20px;\
+                    width: 150px;\
+                    marginLeft: 1rem;\
+                ') Delete Champion
                 p Award: #{champion.award}
                 p Year: #{champion.year}
                 p Description: #{champion.description}
                 img(src="/api/"+champion.fileName style="width:700px;")
-            div(style='\
-            display: flex;\
-            ')
-                button(onclick="editChampion('"+champion._id+"')" style='\
-                height: 20px;\
-                width: 150px;\
-                marginLeft: 1rem;\
-                ') Edit Champion
-                button(onclick="deleteChampion('"+champion._id+"')" style='\
-                height: 20px;\
-                width: 150px;\
-                marginLeft: 1rem;\
-                ') Delete Champion
+           
         hr(style='\
         width: 100%;\
         height: 3px;\

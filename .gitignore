@@ -1,5 +1,4 @@
-/dist/**.js
-/dist/videos
+/dist/**/**.js
 /node_modules
 ./mongosh*
 *.DS_Store

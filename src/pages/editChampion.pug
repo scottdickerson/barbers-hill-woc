@@ -1,8 +1,11 @@
 head 
     script(src="/scripts/uploadPage.js") 
 body
-    h1 Edit Video
-    form#uploadForm(enctype='multipart/form-data' method='POST' action="/api" style='\
+    h1 Edit Champion
+    div(style='width: 300px; padding: 1rem 0rem; display: flex; justify-content: space-between;')
+        button#submitButton(onclick="submitForm(true)") Update Champion
+        button#list(onclick="listChampions()") List existing champions
+    form#uploadForm(enctype='multipart/form-data' method='POST' action="/api/"+_id style='\
     display: flex;\
     flex-flow: column;\
     justify-content: space-between;\
@@ -18,10 +21,9 @@ body
         input#fileUploader(name='imageFile' type='file')
         label#descriptionLabel Description
         textarea#description(aria-labelledby='descriptionLabel' type='text' name='description'  rows='5' cols='35')=description
-        #errorMessage(style='color: red')
+        input#oldImageFileName(name="oldImageFileName" type="hidden" value=fileName)
+        span#errorMessage(style='color: red')
     div(style='padding: 1rem; display: flex; flex-flow: column')
-    //- span#videoFilename
-    //- video#existingVideo(style='height: 300px' controls='')  TODO: show loaded image
-    div(style='width: 300px; display: flex; justify-content: space-between;')
-        button#submitButton(onclick="submitForm()") Update Champion
-        button#list(onclick="listChampions()") List existing champions
+        span#imageFilename Existing Image #{fileName}
+        img#existingImage(style='width: 700px' src="/api/"+fileName)  
+    
