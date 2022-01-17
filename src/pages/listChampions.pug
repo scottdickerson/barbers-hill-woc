@@ -13,12 +13,12 @@ body
             display: flex;\
             flex-flow: column;\
             align-items: flex-start;\
-            width:300px;\
             ')
                 h2 Sport: #{champion.sport}
                 p Award: #{champion.award}
                 p Year: #{champion.year}
                 p Description: #{champion.description}
+                img(src="/api/"+champion.fileName style="width:700px;")
             div(style='\
             display: flex;\
             ')

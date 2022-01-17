@@ -4,7 +4,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "postinstall": "npm install typescript && tsc",
+    "postinstall": "patch-package && npm install typescript && tsc",
     "start": "mkdir -p ./dist/videos && node dist/server.js",
     "start-watch": "nodemon dist/server.js",
     "tsc-watch": "tsc -w",
@@ -29,6 +29,7 @@
     "formidable": "^2.0.1",
     "lodash": "^4.17.21",
     "mongodb": "^4.3.0",
+    "patch-package": "^6.4.7",
     "pug": "^3.0.2"
   }
 }

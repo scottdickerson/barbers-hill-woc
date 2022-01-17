@@ -6,5 +6,7 @@ export interface IChampion extends WithId<Document> {
 
   description: string;
 
+  fileName: string;
+
   id: ObjectId;
 }

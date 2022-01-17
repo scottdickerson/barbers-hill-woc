@@ -21,6 +21,7 @@ const editChampion = (id) => {
 };
 
 const deleteChampion = (id) => {
-  fetch(`/api/${id}`, { method: "DELETE" });
-  location.reload();
+  fetch(`/api/${id}`, { method: "DELETE" }).then(() => {
+    location.reload();
+  });
 };
