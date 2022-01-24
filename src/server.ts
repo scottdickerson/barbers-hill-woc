@@ -171,17 +171,23 @@ app.delete(
       uniqueChampionObjectId
     )) as IChampion;
     console.log("champion filename to delete", championToDelete.fileName);
-    await championsDatabaseCollection.deleteOne(uniqueChampionObjectId);
+    const deletedInfo = await championsDatabaseCollection.deleteOne(
+      uniqueChampionObjectId
+    );
+    if (deletedInfo.deletedCount > 0) {
+      // find the id of the image to delete from GridFS
+      const imageToDelete = await imagesDatabaseCollection.findOne({
+        filename: championToDelete.fileName,
+      });
+      console.log("image to delete", imageToDelete);
+      if (imageToDelete) {
+        await imagesBucket.delete(imageToDelete._id);
+      }
 
-    // find the id of the image to delete from GridFS
-    const imageToDelete = await imagesDatabaseCollection.findOne({
-      filename: championToDelete.fileName,
-    });
-    console.log("image to delete", imageToDelete);
-    if (imageToDelete) {
-      await imagesBucket.delete(imageToDelete._id);
+      res.sendStatus(200);
+    } else {
+      res.sendStatus(404);
     }
-    res.sendStatus(200);
   }
 );
 
