@@ -1,5 +1,5 @@
 import { Document, ObjectId, WithId } from "mongodb";
-export interface IChampion extends WithId<Document> {
+export interface IChampion extends Partial<WithId<Document>> {
   sport: string;
   award: string;
   year: number;
