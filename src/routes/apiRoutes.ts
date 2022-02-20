@@ -8,7 +8,7 @@ import {
 
 const router = express.Router();
 
-router.get("/champions", async (req: Request, res: Response) => {
+router.get("/", async (req: Request, res: Response) => {
   // send back the champions
   console.log("api get route");
   res.json(await findChampions());

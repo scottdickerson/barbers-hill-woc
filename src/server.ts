@@ -4,10 +4,13 @@ import pug from "pug";
 import path from "path";
 import { connectToDB, findChampions } from "./mongoUtils";
 import uiRouter, { pugPagesHome } from "./routes/uiRoutes";
+import cors from "cors";
 
 const app = express();
 
 connectToDB().catch(console.dir);
+
+app.use(cors());
 
 // setup UI routes
 app.use("/ui", uiRouter);
