@@ -10,6 +10,7 @@ const app = express();
 
 connectToDB().catch(console.dir);
 
+console.log("turning off cors");
 app.use(cors());
 
 // setup UI routes
