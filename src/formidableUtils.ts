@@ -30,7 +30,8 @@ export const parseForm = (req: Request, res: Response, next: NextFunction) => {
       const championId = req.params?.id;
       const isUpdate = Boolean(championId);
       console.log("Is this an update? ", isUpdate); // passed as a param if editing, first check the edit case, otherwise it's a new file
-      const fileName = (files.imageFile as formidable.File)?.newFilename; // I'm sure this is only one file at a time
+      const uploadedFile = files.imageFile as formidable.File;
+      const fileName = uploadedFile?.newFilename; // I'm sure this is only one file at a time
       // TODO: better type fields from form in formidable ahead of time
       const newChampion: IChampion = {
         id: new ObjectId(),
@@ -39,7 +40,7 @@ export const parseForm = (req: Request, res: Response, next: NextFunction) => {
         description: fields.description as string,
         award: fields.award as string,
         fileName:
-          fileName !== "invalid-name"
+          fileName !== "invalid-name" && fileName !== "null" && fileName
             ? fileName
             : (fields?.oldImageFileName as string),
         // TODO: actually upload file

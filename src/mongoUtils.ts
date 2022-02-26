@@ -56,13 +56,22 @@ export const updateChampionInMongo = (
 ) => {
   return championsDatabaseCollection.replaceOne(
     { _id: new ObjectId(championId) },
-    { ...omit(champion, "_id", "oldImageFileName") }
+    {
+      ...omit(champion, "_id", "oldImageFileName"),
+    }
   );
   // TODO: delete the old image out of the database if it no longer matches
 };
 
 export const createChampionInMongo = (champion: IChampion) => {
   return championsDatabaseCollection.insertOne(champion);
+};
+
+const findImageFileInGridFS = (fileName: string) => {
+  // find the id of the image to delete from GridFS
+  return imagesDatabaseCollection.findOne({
+    filename: fileName,
+  });
 };
 
 export const deleteChampionInMongo = async (id: string): Promise<boolean> => {
@@ -78,10 +87,9 @@ export const deleteChampionInMongo = async (id: string): Promise<boolean> => {
     uniqueChampionObjectId
   );
   if (deletedInfo.deletedCount > 0) {
-    // find the id of the image to delete from GridFS
-    const imageToDelete = await imagesDatabaseCollection.findOne({
-      filename: championToDelete.fileName,
-    });
+    const imageToDelete = await findImageFileInGridFS(
+      championToDelete.fileName
+    );
     console.log("image to delete", imageToDelete);
     if (imageToDelete) {
       await imagesBucket.delete(imageToDelete._id);
@@ -93,6 +101,10 @@ export const deleteChampionInMongo = async (id: string): Promise<boolean> => {
 };
 
 export const getImageStreamFromMongo = async (imageFileName: string) => {
+  const imageToDelete = await findImageFileInGridFS(imageFileName);
+  if (!imageToDelete) {
+    throw new Error(`Image file doesn't exist in mongo ${imageFileName}`);
+  }
   const readableImage = imagesBucket.openDownloadStreamByName(imageFileName);
   return readableImage;
 };
