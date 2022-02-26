@@ -8,7 +8,7 @@
     "tsc:watch": "tsc-watch --onSuccess \"node ./dist/server.js\"",
     "test": "cross-env TEST_DB=\"barbers-hill-test\" jest",
     "deploy": "git add . && git commit -m 'HEROKU' && git push heroku main && heroku logs --tail",
-    "tsc": "./node_modules/typescript/bin/tsc",
+    "tsc": "tsc",
     "build": "npm install typescript && npm run tsc",
     "postinstall": "patch-package && npm run build"
   },
