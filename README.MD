@@ -4,7 +4,7 @@
 
 ```~~~bash
 heroku login
-heroku create barbers-hill-video-server
+heroku git:remote -a barbers-hill-woc-server
 npm run deploy
 heroku config:set MONGO_HOSTNAME=cluster0.umj4z.mongodb.net
 heroku config:set MONGO_USER=admin
