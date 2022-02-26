@@ -4,13 +4,11 @@
   "description": "",
   "main": "index.js",
   "scripts": {
+    "postinstall": "patch-package && npm install typescript && tsc",
     "start": "node dist/server.js",
     "tsc:watch": "tsc-watch --onSuccess \"node ./dist/server.js\"",
     "test": "cross-env TEST_DB=\"barbers-hill-test\" jest",
-    "deploy": "git add . && git commit -m 'HEROKU' && git push heroku main && heroku logs --tail",
-    "tsc": "tsc",
-    "build": "npm install typescript && npm run tsc",
-    "postinstall": "patch-package && npm run build"
+    "deploy": "git add . && git commit -m 'HEROKU' && git push heroku main && heroku logs --tail"
   },
   "keywords": [],
   "author": "",
@@ -41,7 +39,6 @@
     "mongodb": "^4.3.0",
     "patch-package": "^6.4.7",
     "pug": "^3.0.2",
-    "supertest": "^6.2.2",
-    "tsc": "^2.0.4"
+    "supertest": "^6.2.2"
   }
 }
