@@ -3,7 +3,10 @@ head
 body
     h1 Edit Champion
     div(style='width: 300px; padding: 1rem 0rem; display: flex; justify-content: space-between;')
-        button#submitButton(onclick="submitForm(true)") Update Champion
+        button#submitButton(onclick="submitForm(true)" style=`\
+        background-color:blue;\
+        color:white;\
+        `) Save changes
         button#list(onclick="listChampions()") List existing champions
     form#uploadForm(enctype='multipart/form-data' method='POST' action="/api/"+_id style='\
     display: flex;\

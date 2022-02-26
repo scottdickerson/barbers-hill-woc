@@ -32,6 +32,7 @@ export const parseForm = (req: Request, res: Response, next: NextFunction) => {
       console.log("Is this an update? ", isUpdate); // passed as a param if editing, first check the edit case, otherwise it's a new file
       const uploadedFile = files.imageFile as formidable.File;
       const fileName = uploadedFile?.newFilename; // I'm sure this is only one file at a time
+      const oldImageFileName = fields?.oldImageFileName as string;
       // TODO: better type fields from form in formidable ahead of time
       const newChampion: IChampion = {
         id: new ObjectId(),
@@ -42,8 +43,7 @@ export const parseForm = (req: Request, res: Response, next: NextFunction) => {
         fileName:
           fileName !== "invalid-name" && fileName !== "null" && fileName
             ? fileName
-            : (fields?.oldImageFileName as string),
-        // TODO: actually upload file
+            : oldImageFileName,
       };
 
       try {
@@ -52,7 +52,11 @@ export const parseForm = (req: Request, res: Response, next: NextFunction) => {
             "updating existing champion",
             JSON.stringify(newChampion)
           );
-          await updateChampionInMongo(championId, newChampion);
+          await updateChampionInMongo(
+            championId,
+            newChampion,
+            oldImageFileName
+          );
         } else {
           console.log("uploading new champion", JSON.stringify(newChampion));
           await createChampionInMongo(newChampion);

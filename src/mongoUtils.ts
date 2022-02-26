@@ -50,17 +50,24 @@ export const findChampionsMetadataInMongo = async () => {
   );
 };
 
-export const updateChampionInMongo = (
+export const updateChampionInMongo = async (
   championId: string,
-  champion: IChampion
+  champion: IChampion,
+  oldImageFileName: string
 ) => {
-  return championsDatabaseCollection.replaceOne(
+  await championsDatabaseCollection.replaceOne(
     { _id: new ObjectId(championId) },
     {
       ...omit(champion, "_id", "oldImageFileName"),
     }
   );
-  // TODO: delete the old image out of the database if it no longer matches
+  if (champion.fileName !== oldImageFileName) {
+    console.log("deleting original image", oldImageFileName);
+    const originalImageToDelete = await findImageFileInGridFS(oldImageFileName);
+    if (originalImageToDelete) {
+      await imagesBucket.delete(originalImageToDelete._id);
+    }
+  }
 };
 
 export const createChampionInMongo = (champion: IChampion) => {
