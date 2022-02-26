@@ -1,5 +1,7 @@
 let uploadForm;
 
+const MAX_FILE_SIZE_IN_MB = 3;
+
 document.addEventListener("DOMContentLoaded", () => {
   uploadForm = document.getElementById("uploadForm");
 });
@@ -20,6 +22,11 @@ const submitForm = (edit) => {
     (!edit && imageFileCount === 0)
   ) {
     errorMessage = "All form elements are required";
+  }
+  const fileSize = fileUploader.files[0]?.size;
+  console.log("File size", fileSize);
+  if (fileSize > MAX_FILE_SIZE_IN_MB * 1024 * 1024) {
+    errorMessage = `File cannot be larger than ${MAX_FILE_SIZE_IN_MB}MB`;
   }
   console.log(sportValue);
   console.log(awardValue);
