@@ -1,6 +1,6 @@
 import mongoDB, { MongoClient, ObjectId, GridFSBucket } from "mongodb";
 import { File } from "formidable";
-import { Writable } from "stream";
+import stream, { Writable } from "stream";
 import { IChampion } from "./types";
 import { omit } from "lodash";
 
@@ -98,9 +98,11 @@ export const getImageStreamFromMongo = async (imageFileName: string) => {
 };
 
 export const handleWriteImageFileToMongo = (file: File): Writable => {
-  // this is broken so is not passing the filename
-  console.log("writing file to mongo bucket", file.newFilename);
-  return imagesBucket.openUploadStream(file.newFilename);
+  if (file.newFilename !== "invalid-name") {
+    console.log("writing file to mongo bucket", file.newFilename);
+    return imagesBucket.openUploadStream(file.newFilename);
+  }
+  return new stream.Writable(); // don't do anything here
 };
 
 export const findChampions = async (): Promise<IChampion[]> => {

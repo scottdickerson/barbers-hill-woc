@@ -18,7 +18,8 @@ body
         input#award(aria-labelledby='award' type='text' name='award',value=award)
         label#yearLabel Year
         input#year(placeholder='Enter year of induction' aria-labelledby='yearLabel' type='number' name='year' value=year style='width: 400px')
-        input#fileUploader(name='imageFile' type='file')
+        if !heroku 
+            input#fileUploader(name='imageFile' type='file')
         label#descriptionLabel Description
         textarea#description(aria-labelledby='descriptionLabel' type='text' name='description'  rows='5' cols='35')=description
         input#oldImageFileName(name="oldImageFileName" type="hidden" value=fileName)

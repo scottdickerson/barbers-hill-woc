@@ -4,5 +4,6 @@ body
     h1 Barbers Hill Wall of Champions Administration
     div
     h2 Select an Action
-    button#add(onclick="addChampion()") Add new champion
+    if !heroku 
+        button#add(onclick="addChampion()") Add new champion
     button#list(onclick="listChampions()") List existing champions

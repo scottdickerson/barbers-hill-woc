@@ -9,11 +9,16 @@ import { IChampion } from "./types";
 import { Request, Response, NextFunction } from "express";
 import { ObjectId } from "mongodb";
 
+const MAX_FILE_SIZE_MB = 3;
+
 const form = formidable({
   filename: (name, ext, { originalFilename }) => originalFilename || name,
+  maxFileSize: MAX_FILE_SIZE_MB * 1024 * 1024,
   keepExtensions: false,
   uploadDir: path.join(__dirname, "..", "dist", "images"),
-  fileWriteStreamHandler: handleWriteImageFileToMongo,
+  ...(!process.env.HEROKU
+    ? { fileWriteStreamHandler: handleWriteImageFileToMongo }
+    : {}),
 });
 
 export const parseForm = (req: Request, res: Response, next: NextFunction) => {

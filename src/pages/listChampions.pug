@@ -2,7 +2,8 @@ head
     script(src="/scripts/uploadPage.js") 
 body
     h1 Current Champions
-    button#add(onclick="addChampion()") Add new champion
+    if !heroku
+        button#add(onclick="addChampion()") Add new champion
     each champion in champions 
         div(style='\
         display: flex;\

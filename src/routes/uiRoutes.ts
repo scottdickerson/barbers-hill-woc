@@ -17,7 +17,10 @@ router.get(
       console.log("found champion", champion);
       if (champion) {
         res.send(
-          pug.renderFile(path.join(pugPagesHome, "editChampion.pug"), champion)
+          pug.renderFile(path.join(pugPagesHome, "editChampion.pug"), {
+            ...champion,
+            heroku: process.env.ENVIRONMENT === "heroku",
+          })
         );
       } else {
         res.sendStatus(404);
@@ -34,7 +37,11 @@ router.get("/uploadChampion.html", (req: Request, res: Response) => {
 });
 
 router.get("/mainNavigation.html", (req: Request, res: Response) => {
-  res.send(pug.renderFile(path.join(pugPagesHome, "mainNavigation.pug")));
+  res.send(
+    pug.renderFile(path.join(pugPagesHome, "mainNavigation.pug"), {
+      heroku: process.env.ENVIRONMENT === "heroku",
+    })
+  );
 });
 
 router.get("/listChampions.html", async (req: Request, res: Response) => {
@@ -43,6 +50,7 @@ router.get("/listChampions.html", async (req: Request, res: Response) => {
     res.send(
       pug.renderFile(path.join(pugPagesHome, "listChampions.pug"), {
         champions,
+        heroku: process.env.ENVIRONMENT === "heroku",
       })
     );
   } catch (error) {

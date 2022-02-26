@@ -2,7 +2,7 @@ import apiRouter from "./routes/apiRoutes";
 import express, { Request, Response } from "express";
 import pug from "pug";
 import path from "path";
-import { connectToDB, findChampions } from "./mongoUtils";
+import { connectToDB } from "./mongoUtils";
 import uiRouter, { pugPagesHome } from "./routes/uiRoutes";
 import cors from "cors";
 
