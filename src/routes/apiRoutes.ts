@@ -10,7 +10,7 @@ const router = express.Router();
 
 router.get("/", async (req: Request, res: Response) => {
   // send back the champions
-  console.log("api get route");
+  // console.log("api get route");
   res.json(await findChampions());
 });
 
@@ -43,7 +43,7 @@ router.delete(
 // This is used to send images back to the <img src tags in our documents
 router.get("/:imageFileName", async (req: Request, res: Response) => {
   const fileName = req?.params?.imageFileName;
-  console.log("downloading filename", fileName);
+  //console.log("downloading filename", fileName);
   if (fileName) {
     try {
       const readableImage = await getImageStreamFromMongo(fileName);

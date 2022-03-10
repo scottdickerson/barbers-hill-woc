@@ -113,13 +113,27 @@ export const getImageStreamFromMongo = async (imageFileName: string) => {
     throw new Error(`Image file doesn't exist in mongo ${imageFileName}`);
   }
   const readableImage = imagesBucket.openDownloadStreamByName(imageFileName);
+  // console.log("opened download stream for ", imageFileName);
   return readableImage;
 };
 
 export const handleWriteImageFileToMongo = (file: File): Writable => {
   if (file.newFilename !== "invalid-name") {
     console.log("writing file to mongo bucket", file.newFilename);
-    return imagesBucket.openUploadStream(file.newFilename);
+    const fileUploadStream = imagesBucket.openUploadStream(file.newFilename);
+    fileUploadStream.on("error", (err) =>
+      console.error("error uploading", file.newFilename, err)
+    );
+    fileUploadStream.on("close", () =>
+      console.log("upload stream closed for", file.newFilename)
+    );
+    fileUploadStream.on("finish", () =>
+      console.log("file upload finished for", file.newFilename)
+    );
+    fileUploadStream.on("pipe", () =>
+      console.log("file upload piped for", file.newFilename)
+    );
+    return fileUploadStream;
   }
   return new stream.Writable(); // don't do anything here
 };
@@ -127,7 +141,7 @@ export const handleWriteImageFileToMongo = (file: File): Writable => {
 export const findChampions = async (): Promise<IChampion[]> => {
   try {
     const champions = await findChampionsMetadataInMongo();
-    console.log("listing champions", champions);
+    // console.log("listing champions", champions);
     return champions;
   } catch (error) {
     console.error("couldn't find champions");
