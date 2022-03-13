@@ -1,5 +1,5 @@
 import express, { NextFunction, Request, Response } from "express";
-import { parseForm } from "../formidableUtils";
+import { parseForm, uploadFiles } from "../multerUtils";
 import {
   findChampions,
   deleteChampionInMongo,
@@ -17,9 +17,7 @@ router.get("/", async (req: Request, res: Response) => {
 // load champion image
 
 // create champion
-router.post("/", (req: Request, res: Response, next: NextFunction) => {
-  parseForm(req, res, next);
-});
+router.post("/", uploadFiles, parseForm);
 
 // update champion
 router.post("/:id", (req: Request, res: Response, next: NextFunction) => {

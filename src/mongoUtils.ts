@@ -1,12 +1,11 @@
 import mongoDB, { MongoClient, ObjectId, GridFSBucket } from "mongodb";
-import { File } from "formidable";
-import stream, { Writable } from "stream";
 import { IChampion } from "./types";
 import { omit } from "lodash";
 
+export const databaseName = process.env.TEST_DB || "barbers-hill";
+
 export async function connectToDB() {
   await client.connect();
-  const databaseName = process.env.TEST_DB || "barbers-hill";
   const database = client.db(databaseName);
   championsDatabaseCollection = database.collection("wall-of-champions");
   console.log(
@@ -19,18 +18,18 @@ export async function connectToDB() {
 }
 
 // Replace the uri string with your MongoDB deployment's connection string.
-const uri = process.env.MONGO_HOSTNAME
-  ? `mongodb+srv://${process.env.MONGO_USER}:${process.env.MONGO_PASS}@${process.env.MONGO_HOSTNAME}/?retryWrites=true&w=majority`
+export const uri = process.env.MONGO_HOSTNAME
+  ? `mongodb+srv://${process.env.MONGO_USER}:${process.env.MONGO_PASS}@${process.env.MONGO_HOSTNAME}/`
   : `mongodb://127.0.0.1:${
       process.env.MONGO_PORT ? process.env.MONGO_PORT : "27017"
-    }`;
+    }/`;
 
 const client = new MongoClient(uri);
 let championsDatabaseCollection: mongoDB.Collection;
 let imagesBucket: mongoDB.GridFSBucket;
 let imagesDatabaseCollection: mongoDB.Collection;
 
-const IMAGES_BUCKET_NAME = "woc-images";
+export const IMAGES_BUCKET_NAME = "woc-images";
 
 export const disconnectFromDB = async () => {
   await client.close();
@@ -115,27 +114,6 @@ export const getImageStreamFromMongo = async (imageFileName: string) => {
   const readableImage = imagesBucket.openDownloadStreamByName(imageFileName);
   // console.log("opened download stream for ", imageFileName);
   return readableImage;
-};
-
-export const handleWriteImageFileToMongo = (file: File): Writable => {
-  if (file.newFilename !== "invalid-name") {
-    console.log("writing file to mongo bucket", file.newFilename);
-    const fileUploadStream = imagesBucket.openUploadStream(file.newFilename);
-    fileUploadStream.on("error", (err) =>
-      console.error("error uploading", file.newFilename, err)
-    );
-    fileUploadStream.on("close", () =>
-      console.log("upload stream closed for", file.newFilename)
-    );
-    fileUploadStream.on("finish", () =>
-      console.log("file upload finished for", file.newFilename)
-    );
-    fileUploadStream.on("pipe", () =>
-      console.log("file upload piped for", file.newFilename)
-    );
-    return fileUploadStream;
-  }
-  return new stream.Writable(); // don't do anything here
 };
 
 export const findChampions = async (): Promise<IChampion[]> => {

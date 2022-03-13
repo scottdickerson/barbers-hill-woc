@@ -3,3 +3,6 @@
 ./mongosh*
 *.DS_Store
 .env
+test-results/
+playwright-report/
+tests/images/*

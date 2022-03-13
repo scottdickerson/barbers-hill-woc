@@ -1,5 +1,33 @@
 # Admin server for Wall of Champions
 
+## Running the app locally
+
+Production mode
+
+```
+npm run build
+npm run start
+```
+
+Development mode
+
+```
+npm run tsc:watch
+```
+
+### URL
+
+http://127.0.0.1:3000/
+
+## Running integration testcases
+
+Start the test server pointing to the test database and execute testcases
+
+```
+TEST_DB=barbers-hill-test npm start
+npx playwright test --headed --project=chromium --workers=1 --debug
+```
+
 ## Deploy to Heroku for testing
 
 ```~~~bash
