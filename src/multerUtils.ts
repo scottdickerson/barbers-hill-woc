@@ -24,8 +24,6 @@ var storage = new GridFsStorage({
 
 export const uploadFiles = multer({ storage: storage }).single("imageFile");
 
-const MAX_FILE_SIZE_MB = 3;
-
 export const parseForm = async (
   req: Request,
   res: Response,
