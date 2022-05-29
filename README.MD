@@ -1,5 +1,11 @@
 # Admin server for Wall of Champions
 
+## TODOS
+
+- Delete image if you edit a champion and replace the image
+- Support version without image
+- WOC character limits on each field
+
 ## Running the app locally
 
 Production mode
@@ -63,7 +69,3 @@ Restore to local db: https://docs.mongodb.com/database-tools/mongorestore/
 mongorestore
 
 ```
-
-## TODOS
-
-- Delete image if you edit a champion and replace the image
