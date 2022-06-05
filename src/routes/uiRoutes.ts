@@ -49,7 +49,9 @@ router.get("/listChampions.html", async (req: Request, res: Response) => {
     const champions = await findChampions();
     res.send(
       pug.renderFile(path.join(pugPagesHome, "listChampions.pug"), {
-        champions,
+        champions: champions.sort(
+          (champion1, champion2) => champion2.year - champion1.year
+        ),
         // heroku: process.env.ENVIRONMENT === "heroku",
       })
     );

@@ -2,8 +2,7 @@ head
     script(src="/scripts/uploadPage.js") 
 body
     h1 Current Champions
-    if !heroku
-        button#add(onclick="addChampion()") Add new champion
+    button#add(onclick="addChampion()" style="background-color: blue; color: white;") Add new champion
     each champion in champions 
         div(style='\
         display: flex;\
@@ -25,12 +24,11 @@ body
                     width: 150px;\
                     marginLeft: 1rem;\
                     ') Edit Champion
-                    if !heroku
-                        button(onclick="deleteChampion('"+champion._id+"')" style='\
-                        height: 20px;\
-                        width: 150px;\
-                        marginLeft: 1rem;\
-                        ') Delete Champion
+                    button(onclick="deleteChampion('"+champion._id+"')" style='\
+                    height: 20px;\
+                    width: 150px;\
+                    marginLeft: 1rem;\
+                    ') Delete Champion
                 p Award: #{champion.award}
                 p Year: #{champion.year}
                 p Description: #{champion.description}
