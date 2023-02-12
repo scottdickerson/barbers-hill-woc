@@ -20,13 +20,7 @@ router.get("/", async (req: Request, res: Response) => {
 router.post("/", uploadFiles, parseForm);
 
 // update champion
-router.post(
-  "/:id",
-  uploadFiles,
-  (req: Request, res: Response, next: NextFunction) => {
-    parseForm(req, res, next);
-  }
-);
+router.post("/:id", uploadFiles, parseForm);
 
 router.delete(
   "/:id",

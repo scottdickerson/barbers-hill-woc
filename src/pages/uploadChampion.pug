@@ -15,7 +15,7 @@ body
         input#award(aria-labelledby='awardLabel' type='text' name='award')
         label#yearLabel Year
         input#year(placeholder='Enter year of induction' aria-labelledby='yearLabel' type='number' name='year' style='width: 400px')
-        input#fileUploader(name='imageFile' type='file')
+        input#fileUploader(name='imageFile' type='file' accept=".jpg,.png,.jpeg")
         label#descriptionLabel Description
         textarea#description(aria-labelledby='descriptionLabel' type='text' name='description' rows='5' cols='35')
         #errorMessage(style='color: red')
